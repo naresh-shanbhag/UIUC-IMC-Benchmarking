@@ -63,7 +63,9 @@ def fetch_data():
 
     return data
 
+# List of Technology and Architectures to Loop
 TECH_LIST = [5,7,12,16,22,28,45,55,65,180]
+ARCH_LIST = ['SRAM', 'eNVM', 'eDRAM', 'Digital']
 
 # SRAM: TOPS/W vs. TOPS/mm^2 (with TSMC paper)
 def plot_1(data): 
@@ -74,9 +76,9 @@ def plot_1(data):
     marker = 'ososososos'
     marker_size = 100 
     
-    for j, t in enumerate(TECH_LIST):
-        SRAM = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == t])
-        ax.scatter(data.TOPS_mm2[SRAM], data.TOPS_W[SRAM], marker_size, colors[j], marker[j], label = '%dnm'%t)
+    for j, tech in enumerate(TECH_LIST):
+        SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
+        ax.scatter(data.TOPS_mm2[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -99,9 +101,9 @@ def plot_2(data):
     marker = 'ososososos'
     marker_size = 100 
     
-    for j, t in enumerate(TECH_LIST):
-        SRAM = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == t])
-        ax.scatter(data.TOPS[SRAM], data.TOPS_W[SRAM], marker_size, colors[j], marker[j], label = '%dnm'%t)
+    for j, tech in enumerate(TECH_LIST):
+        SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
+        ax.scatter(data.TOPS[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -124,9 +126,9 @@ def plot_3(data):
     marker = 'ososososos'
     marker_size = 100 
     
-    for j, t in enumerate(TECH_LIST):
-        SRAM = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == t])
-        ax.scatter(data.B_pre_ADC[SRAM], data.TOPS_W[SRAM], marker_size, colors[j], marker[j], label = '%dnm'%t)
+    for j, tech in enumerate(TECH_LIST):
+        SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
+        ax.scatter(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
     
     ax.set_yscale('log')
     ax.grid(which = 'both')
@@ -148,9 +150,9 @@ def plot_4(data):
     marker = 'ososososos'
     marker_size = 100 
     
-    for j, t in enumerate(TECH_LIST):
-        SRAM = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == t])
-        ax.scatter(data.B_pre_ADC[SRAM], data.B_ADC[SRAM], marker_size, colors[j], marker[j], label = '%dnm'%t)
+    for j, tech in enumerate(TECH_LIST):
+        SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
+        ax.scatter(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
     
     ax.grid(which = 'both')
     
@@ -161,15 +163,79 @@ def plot_4(data):
 
     fig.savefig(OUTPUT_DIR + '/4_BADC_vs_BIcol_SRAM.svg')
     fig.savefig(OUTPUT_DIR + '/4_BADC_vs_BIcol_SRAM.pdf')
-    
+
+
+# Grouping by Architecture: SRAM/eNVM/Dig: TOPS/W vs. TOPS (with TSMC paper)
 def plot_5(data):
-    pass
+    fig, ax = plt.subplots(figsize = (9,7))
     
+    colors = 'gbkr'
+    marker = 'odos'
+    marker_size = 100 
+    
+    for j, arch in enumerate(ARCH_LIST):
+        archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
+        ax.scatter(data.TOPS[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = '%s-IMC'%arch)
+    
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.grid(which = 'both')
+    
+    ax.legend(fontsize = 12)
+    ax.set_title('Energy-efficiency vs. Throughput for SRAM, eNVM, eDRAM, Digital', fontsize = 15)
+    ax.set_xlabel('1b-TOPS', fontsize = 15)
+    ax.set_ylabel('1b-TOPS/W', fontsize = 15)
+
+    fig.savefig(OUTPUT_DIR + '/5_1b-TOPS_vs_1b-TOPSpW_all.svg')
+    fig.savefig(OUTPUT_DIR + '/5_1b-TOPS_vs_1b-TOPSpW_all.pdf')
+
+# Grouping by Architecture: SRAM/eNVM/Dig: TOPS/W vs. TOPS (with TSMC paper)
 def plot_6(data):
-    pass
+    fig, ax = plt.subplots(figsize = (9,7))
     
+    colors = 'gbkr'
+    marker = 'odos'
+    marker_size = 100 
+    
+    for j, arch in enumerate(ARCH_LIST):
+        archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
+        ax.scatter(data.TOPS_mm2[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = '%s-IMC'%arch)
+    
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.grid(which = 'both')
+    
+    ax.legend(fontsize = 12)
+    ax.set_title('Energy-efficiency vs. Compute Density for SRAM, eNVM, eDRAM, Digital', fontsize = 15)
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
+    ax.set_ylabel('1b-TOPS/W', fontsize = 15)
+
+    fig.savefig(OUTPUT_DIR + '/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.svg')
+    fig.savefig(OUTPUT_DIR + '/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.pdf')
+
+# Grouping by Architecture: SRAM/eNVM/Dig: TOPS vs. W
 def plot_7(data):
-    pass
+    fig, ax = plt.subplots(figsize = (9,7))
+    
+    colors = 'gbkr'
+    marker = 'odos'
+    marker_size = 100 
+    
+    for j, arch in enumerate(ARCH_LIST):
+        archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
+        ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = '%s-IMC'%arch)
+    
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.grid(which = 'both')
+    
+    ax.legend(fontsize = 12)
+    ax.set_title('Throughput vs. Power for SRAM, eNVM, eDRAM, and Digital', fontsize = 15)
+    ax.set_xlabel('Power (W)', fontsize = 15)
+    ax.set_ylabel('1b-TOPS', fontsize = 15)
+
+    fig.savefig(OUTPUT_DIR + '/7_1b-TOPS_vs_W_all.svg')
+    fig.savefig(OUTPUT_DIR + '/7_1b-TOPS_vs_W_all.pdf')
     
     
 def main():
@@ -178,6 +244,9 @@ def main():
     plot_2(data)
     plot_3(data)
     plot_4(data)
+    plot_5(data)
+    plot_6(data)
+    plot_7(data)
 
 if __name__ == '__main__':
     main()
