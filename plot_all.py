@@ -10,6 +10,9 @@ from matplotlib import pyplot as plt
 
 # Global Variables
 
+# Set CSV Path
+CSV_FILE = 'Benchmarking_Data.csv'
+
 # Set Output Directory
 OUTPUT_DIR = 'Figures_Test'
 
@@ -25,7 +28,7 @@ class Data:
 
 # Collect all data from CSV file
 def fetch_data():
-    with open('Benchmarking_Data.csv') as file:
+    with open(CSV_FILE) as file:
         # Load CSV File
         reader = list(csv.DictReader(file)) 
 
