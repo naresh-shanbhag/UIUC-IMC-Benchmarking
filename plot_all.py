@@ -21,10 +21,15 @@ TECH_LIST = [5,7,12,16,22,28,45,55,65,180]
 ARCH_LIST = ['SRAM', 'eNVM', 'eDRAM', 'Digital']
 ARCH_LABEL_LIST = ['SRAM-IMC', 'eNVM-IMC', 'eDRAM-IMC', 'Digital']
 
+# Rectangle for IMC Processors
+MARK_IMC_PROCESSOR = 1
+
 
 # Empty Class to Store Data
 class Data: 
     pass
+
+
 
 # Collect all data from CSV file
 def fetch_data():
@@ -74,7 +79,7 @@ def fetch_data():
         data.Arch         = [row['Architecture'] for row in reader]
         data.TOPS_a       = np.array([row['TOPS_a '] for row in reader], dtype = np.float32)
         data.TOPS         = np.array([row['TOPS'] for row in reader], dtype = np.float32)
-        data.IMC_Pro      = np.array([row['IMC_Processor'] == 'Y' for row in reader], dtype = np.int32)
+        data.IMC_Proc      = np.array([row['IMC_Processor'] == 'Y' for row in reader], dtype = np.int32)
         
     return data
 
@@ -254,6 +259,7 @@ def plot_7(data):
 # Plot all figures
 def main():
     data = fetch_data()
+    print(data.IMC_Proc)
     plot_1(data)
     plot_2(data)
     plot_3(data)
