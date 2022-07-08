@@ -7,17 +7,29 @@ import csv
 import numpy as np
 from matplotlib import pyplot as plt
 
+
+# Global Variables
+
 # Set Output Directory
 OUTPUT_DIR = 'Figures_Test'
+
+# List of Technology and Architectures to Loop
+TECH_LIST = [5,7,12,16,22,28,45,55,65,180]
+ARCH_LIST = ['SRAM', 'eNVM', 'eDRAM', 'Digital']
+ARCH_LABEL_LIST = ['SRAM-IMC', 'eNVM-IMC', 'eDRAM-IMC', 'Digital']
+
 
 # Empty Class to Store Data
 class Data: 
     pass
 
+# Collect all data from CSV file
 def fetch_data():
     with open('Benchmarking_Data.csv') as file:
         # Load CSV File
         reader = list(csv.DictReader(file)) 
+
+        # Replacing Empty Strings in CSV
         for row in reader:
             for key in row:
                 if row[key] == '':
@@ -59,13 +71,11 @@ def fetch_data():
         data.Arch         = [row['Architecture'] for row in reader]
         data.TOPS_a       = np.array([row['TOPS_a '] for row in reader], dtype = np.float32)
         data.TOPS         = np.array([row['TOPS'] for row in reader], dtype = np.float32)
+        data.IMC_Pro      = np.array([row['IMC_Processor'] == 'Y' for row in reader], dtype = np.int32)
         
-
     return data
 
-# List of Technology and Architectures to Loop
-TECH_LIST = [5,7,12,16,22,28,45,55,65,180]
-ARCH_LIST = ['SRAM', 'eNVM', 'eDRAM', 'Digital']
+
 
 # SRAM: TOPS/W vs. TOPS/mm^2 (with TSMC paper)
 def plot_1(data): 
@@ -175,7 +185,7 @@ def plot_5(data):
     
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
-        ax.scatter(data.TOPS[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = '%s-IMC'%arch)
+        ax.scatter(data.TOPS[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -199,7 +209,7 @@ def plot_6(data):
     
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
-        ax.scatter(data.TOPS_mm2[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = '%s-IMC'%arch)
+        ax.scatter(data.TOPS_mm2[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -223,7 +233,7 @@ def plot_7(data):
     
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
-        ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = '%s-IMC'%arch)
+        ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -237,7 +247,8 @@ def plot_7(data):
     fig.savefig(OUTPUT_DIR + '/7_1b-TOPS_vs_W_all.svg')
     fig.savefig(OUTPUT_DIR + '/7_1b-TOPS_vs_W_all.pdf')
     
-    
+
+# Plot all figures
 def main():
     data = fetch_data()
     plot_1(data)
@@ -248,5 +259,7 @@ def main():
     plot_6(data)
     plot_7(data)
 
+
+# Main
 if __name__ == '__main__':
     main()
