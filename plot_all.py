@@ -278,7 +278,7 @@ def plot_7(data):
         if MARK_IMC_PROCESSOR:
             archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
             if len(archs):
-                ax.plot(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS_W[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
+                ax.plot(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
