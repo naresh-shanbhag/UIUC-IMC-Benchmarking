@@ -6,34 +6,40 @@
 import csv 
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib import markers
 
 
-# Global Variables
-
+##################################################################
+######################## User Settings ###########################
+##################################################################
 # Set CSV Path
 CSV_FILE = 'Benchmarking_Data.csv'
 
 # Set Output Directory
 OUTPUT_DIR = 'Figures_Test'
 
+# Plot Rectangle for IMC Processors
+MARK_IMC_PROCESSOR = 1
+
+##################################################################
+##################################################################
+
 # List of Technology and Architectures to Loop
 TECH_LIST = [5,7,12,16,22,28,45,55,65,180]
 ARCH_LIST = ['SRAM', 'eNVM', 'eDRAM', 'Digital']
 ARCH_LABEL_LIST = ['SRAM-IMC', 'eNVM-IMC', 'eDRAM-IMC', 'Digital']
-
-# Rectangle for IMC Processors
-MARK_IMC_PROCESSOR = 1
 
 
 # Pyplot Variables
 plt.rcParams['axes.axisbelow'] = True
 plt.rcParams['legend.loc'] = 'lower right'
 
+# Pyplot Red Box 
+red_box_style = markers.MarkerStyle([(-1,-1), (-1,1), (1,1), (1,-1)], 'none')
+
 # Empty Class to Store Data
 class Data: 
     pass
-
-
 
 # Collect all data from CSV file
 def fetch_data():
@@ -88,7 +94,6 @@ def fetch_data():
     return data
 
 
-
 # SRAM: TOPS/W vs. TOPS/mm^2 (with TSMC paper)
 def plot_1(data): 
     
@@ -101,6 +106,10 @@ def plot_1(data):
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
         ax.scatter(data.TOPS_mm2[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR:
+            SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
+            if len(SRAM_tech):
+                ax.plot(data.TOPS_mm2[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -126,6 +135,10 @@ def plot_2(data):
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
         ax.scatter(data.TOPS[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR:
+            SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
+            if len(SRAM_tech):
+                ax.plot(data.TOPS[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -151,6 +164,10 @@ def plot_3(data):
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
         ax.scatter(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR:
+            SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
+            if len(SRAM_tech):
+                ax.plot(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_yscale('log')
     ax.grid(which = 'both')
@@ -175,6 +192,10 @@ def plot_4(data):
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
         ax.scatter(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR:
+            SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
+            if len(SRAM_tech):
+                ax.plot(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.grid(which = 'both')
     
@@ -196,8 +217,12 @@ def plot_5(data):
     marker_size = 100 
     
     for j, arch in enumerate(ARCH_LIST):
-        archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
+        archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch])
         ax.scatter(data.TOPS[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
+        if MARK_IMC_PROCESSOR:
+            archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
+            if len(archs):
+                ax.plot(data.TOPS[archs], data.TOPS_W[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -222,6 +247,10 @@ def plot_6(data):
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
         ax.scatter(data.TOPS_mm2[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
+        if MARK_IMC_PROCESSOR:
+            archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
+            if len(archs):
+                ax.plot(data.TOPS_mm2[archs], data.TOPS_W[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -246,6 +275,10 @@ def plot_7(data):
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
         ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
+        if MARK_IMC_PROCESSOR:
+            archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
+            if len(archs):
+                ax.plot(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS_W[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -263,7 +296,6 @@ def plot_7(data):
 # Plot all figures
 def main():
     data = fetch_data()
-    print(data.IMC_Proc)
     plot_1(data)
     plot_2(data)
     plot_3(data)
