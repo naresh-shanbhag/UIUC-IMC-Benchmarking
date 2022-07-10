@@ -25,6 +25,10 @@ ARCH_LABEL_LIST = ['SRAM-IMC', 'eNVM-IMC', 'eDRAM-IMC', 'Digital']
 MARK_IMC_PROCESSOR = 1
 
 
+# Pyplot Variables
+plt.rcParams['axes.axisbelow'] = True
+plt.rcParams['legend.loc'] = 'lower right'
+
 # Empty Class to Store Data
 class Data: 
     pass
@@ -33,7 +37,7 @@ class Data:
 
 # Collect all data from CSV file
 def fetch_data():
-    with open(CSV_FILE) as file:
+    with open(CSV_FILE, encoding='utf-8') as file:
         # Load CSV File
         reader = list(csv.DictReader(file)) 
 
