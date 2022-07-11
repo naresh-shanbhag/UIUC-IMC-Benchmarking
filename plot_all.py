@@ -16,7 +16,7 @@ from matplotlib import markers
 CSV_FILE = 'Benchmarking_Data.csv'
 
 # Set Output Directory
-OUTPUT_DIR = 'Figures_Test'
+OUTPUT_DIR = 'figures'
 
 # Plot Rectangle for IMC Processors
 MARK_IMC_PROCESSOR = 1
@@ -121,8 +121,8 @@ def plot_1(data):
     ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.svg')
-    fig.savefig(OUTPUT_DIR + '/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.pdf')
 
 
 # SRAM: TOPS/W vs. TOPS
@@ -150,8 +150,8 @@ def plot_2(data):
     ax.set_xlabel('1b-TOPS', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/2_1b-TOPSpW_vs_1b-TOPS_SRAM.svg')
-    fig.savefig(OUTPUT_DIR + '/2_1b-TOPSpW_vs_1b-TOPS_SRAM.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/2_1b-TOPSpW_vs_1b-TOPS_SRAM.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/2_1b-TOPSpW_vs_1b-TOPS_SRAM.pdf')
 
 
 # SRAM: TOPS/W vs. B_I_col
@@ -178,8 +178,8 @@ def plot_3(data):
     ax.set_xlabel('$B_{I(col)}$ (bits)', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/3_1b-TOPSpW_vs_BIcol_SRAM.svg')
-    fig.savefig(OUTPUT_DIR + '/3_1b-TOPSpW_vs_BIcol_SRAM.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/3_1b-TOPSpW_vs_BIcol_SRAM.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/3_1b-TOPSpW_vs_BIcol_SRAM.pdf')
 
 
 # SRAM: B_ADC vs. B_pre_ADC
@@ -205,8 +205,8 @@ def plot_4(data):
     ax.set_xlabel('$B_{I(col)}$ (bits)', fontsize = 15)
     ax.set_ylabel('$B_{ADC}$ (bits)', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/4_BADC_vs_BIcol_SRAM.svg')
-    fig.savefig(OUTPUT_DIR + '/4_BADC_vs_BIcol_SRAM.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/4_BADC_vs_BIcol_SRAM.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/4_BADC_vs_BIcol_SRAM.pdf')
 
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS/W vs. TOPS (with TSMC paper)
@@ -234,8 +234,8 @@ def plot_5(data):
     ax.set_xlabel('1b-TOPS', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/5_1b-TOPS_vs_1b-TOPSpW_all.svg')
-    fig.savefig(OUTPUT_DIR + '/5_1b-TOPS_vs_1b-TOPSpW_all.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/5_1b-TOPS_vs_1b-TOPSpW_all.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/5_1b-TOPS_vs_1b-TOPSpW_all.pdf')
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS/W vs. TOPS (with TSMC paper)
 def plot_6(data):
@@ -262,8 +262,8 @@ def plot_6(data):
     ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.svg')
-    fig.savefig(OUTPUT_DIR + '/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.pdf')
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS vs. W
 def plot_7(data):
@@ -276,7 +276,6 @@ def plot_7(data):
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
         ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
-        print(len(archs))
         if MARK_IMC_PROCESSOR:
             archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
             if len(archs):
@@ -291,8 +290,8 @@ def plot_7(data):
     ax.set_xlabel('Power (W)', fontsize = 15)
     ax.set_ylabel('1b-TOPS', fontsize = 15)
 
-    fig.savefig(OUTPUT_DIR + '/7_1b-TOPS_vs_W_all.svg')
-    fig.savefig(OUTPUT_DIR + '/7_1b-TOPS_vs_W_all.pdf')
+    fig.savefig(OUTPUT_DIR + '/svg/7_1b-TOPS_vs_W_all.svg')
+    fig.savefig(OUTPUT_DIR + '/pdf/7_1b-TOPS_vs_W_all.pdf')
     
 
 # Plot all figures
