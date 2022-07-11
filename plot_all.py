@@ -50,6 +50,7 @@ def fetch_data():
         # Replacing Empty Strings in CSV
         for row in reader:
             for key in row:
+                row[key] = row[key].rstrip(' ')
                 if row[key] == '':
                     row[key] = float('NAN')
                     
@@ -275,6 +276,7 @@ def plot_7(data):
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
         ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
+        print(len(archs))
         if MARK_IMC_PROCESSOR:
             archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
             if len(archs):
