@@ -18,8 +18,8 @@ CSV_FILE = 'Benchmarking_Data.csv'
 # Set Output Directory
 OUTPUT_DIR = 'figures'
 
-# Plot Rectangle for IMC Processors
-MARK_IMC_PROCESSOR = 1
+# Plot Rectangle for IMC Processors 
+MARK_IMC_PROCESSOR = [1, 1, 1, 0, 1, 1, 1]
 
 ##################################################################
 ##################################################################
@@ -34,6 +34,10 @@ ARCH_LABEL_LIST = ['SRAM-IMC', 'eNVM-IMC', 'eDRAM-IMC', 'Digital']
 plt.rcParams['axes.axisbelow'] = True
 plt.rcParams['legend.loc'] = 'lower right'
 plt.rcParams['font.family'] = 'calibri'
+
+FIG_SIZE = (7.5, 5.5)
+COLORS = {'r': 'r', 'g': 'lawngreen', 'b':'b', 'c': 'cyan', 'k': 'k'}
+GRID_ALPHA = 0.4
 
 
 # Pyplot Red Box 
@@ -100,7 +104,7 @@ def fetch_data():
 # SRAM: TOPS/W vs. TOPS/mm^2 (with TSMC paper)
 def plot_1(data): 
     
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'rrggbbcckk'
     marker = 'ososososos'
@@ -108,18 +112,18 @@ def plot_1(data):
     
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
-        ax.scatter(data.TOPS_mm2[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.TOPS_mm2[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, COLORS[colors[j]], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR[0]:
             SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
             if len(SRAM_tech):
                 ax.plot(data.TOPS_mm2[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('Energy-efficiency vs. Compute Density', fontsize = 15)
+    ax.set_title('Energy-efficiency vs. Compute Density', fontsize = 15, fontweight = 'bold')
     ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
@@ -129,7 +133,7 @@ def plot_1(data):
 
 # SRAM: TOPS/W vs. TOPS
 def plot_2(data):
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'rrggbbcckk'
     marker = 'ososososos'
@@ -137,18 +141,19 @@ def plot_2(data):
     
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
-        ax.scatter(data.TOPS[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.TOPS[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, COLORS[colors[j]], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR[1]:
             SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
             if len(SRAM_tech):
                 ax.plot(data.TOPS[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('Energy Efficiency vs. Throughput', fontsize = 15)
+    ax.set_title('Energy Efficiency vs. Throughput', fontsize = 15, fontweight = 'bold')
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_xlabel('1b-TOPS', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
@@ -158,7 +163,7 @@ def plot_2(data):
 
 # SRAM: TOPS/W vs. B_I_col
 def plot_3(data):
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'rrggbbcckk'
     marker = 'ososososos'
@@ -166,17 +171,18 @@ def plot_3(data):
     
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
-        ax.scatter(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], marker_size, COLORS[colors[j]], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR[2]:
             SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
             if len(SRAM_tech):
                 ax.plot(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_yscale('log')
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('Energy-efficiency vs. Pre-ADC Information Content', fontsize = 15)
+    ax.set_title('Energy-efficiency vs. Pre-ADC Information Content', fontsize = 15, fontweight = 'bold')
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_xlabel('$B_{I(col)}$ (bits)', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
@@ -186,7 +192,7 @@ def plot_3(data):
 
 # SRAM: B_ADC vs. B_pre_ADC
 def plot_4(data):
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'rrggbbcckk'
     marker = 'ososososos'
@@ -194,16 +200,17 @@ def plot_4(data):
     
     for j, tech in enumerate(TECH_LIST):
         SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech])
-        ax.scatter(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], marker_size, colors[j], marker[j], label = '%dnm'%tech)
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], marker_size, COLORS[colors[j]], marker[j], label = '%dnm'%tech)
+        if MARK_IMC_PROCESSOR[3]:
             SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
             if len(SRAM_tech):
                 ax.plot(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('ADC Precision vs. Pre-ADC Information Content', fontsize = 15)
+    ax.set_title('ADC Precision vs. Pre-ADC Information Content', fontsize = 15, fontweight = 'bold')
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_xlabel('$B_{I(col)}$ (bits)', fontsize = 15)
     ax.set_ylabel('$B_{ADC}$ (bits)', fontsize = 15)
 
@@ -213,7 +220,7 @@ def plot_4(data):
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS/W vs. TOPS (with TSMC paper)
 def plot_5(data):
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'gbkr'
     marker = 'odos'
@@ -221,18 +228,19 @@ def plot_5(data):
     
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch])
-        ax.scatter(data.TOPS[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.TOPS[archs], data.TOPS_W[archs], marker_size, COLORS[colors[j]], marker[j], label = ARCH_LABEL_LIST[j])
+        if MARK_IMC_PROCESSOR[4]:
             archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
             if len(archs):
                 ax.plot(data.TOPS[archs], data.TOPS_W[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('Energy-efficiency vs. Throughput for SRAM, eNVM, eDRAM, Digital', fontsize = 15)
+    ax.set_title('Energy-efficiency vs. Throughput for SRAM, eNVM, eDRAM, Digital', fontsize = 15, fontweight = 'bold')
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_xlabel('1b-TOPS', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
@@ -241,7 +249,7 @@ def plot_5(data):
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS/W vs. TOPS (with TSMC paper)
 def plot_6(data):
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'gbkr'
     marker = 'odos'
@@ -249,18 +257,19 @@ def plot_6(data):
     
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
-        ax.scatter(data.TOPS_mm2[archs], data.TOPS_W[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.TOPS_mm2[archs], data.TOPS_W[archs], marker_size, COLORS[colors[j]], marker[j], label = ARCH_LABEL_LIST[j])
+        if MARK_IMC_PROCESSOR[5]:
             archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
             if len(archs):
                 ax.plot(data.TOPS_mm2[archs], data.TOPS_W[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('Energy-efficiency vs. Compute Density for SRAM, eNVM, eDRAM, Digital', fontsize = 15)
+    ax.set_title('Energy-efficiency vs. Compute Density for SRAM, eNVM, eDRAM, Digital', fontsize = 15, fontweight = 'bold')
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
@@ -269,7 +278,7 @@ def plot_6(data):
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS vs. W
 def plot_7(data):
-    fig, ax = plt.subplots(figsize = (9,7))
+    fig, ax = plt.subplots(figsize = FIG_SIZE)
     
     colors = 'gbkr'
     marker = 'odos'
@@ -277,18 +286,19 @@ def plot_7(data):
     
     for j, arch in enumerate(ARCH_LIST):
         archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == arch])
-        ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, colors[j], marker[j], label = ARCH_LABEL_LIST[j])
-        if MARK_IMC_PROCESSOR:
+        ax.scatter(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], marker_size, COLORS[colors[j]], marker[j], label = ARCH_LABEL_LIST[j])
+        if MARK_IMC_PROCESSOR[6]:
             archs = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i]  == arch and data.IMC_Proc[i] == 1])
             if len(archs):
                 ax.plot(data.TOPS[archs] / data.TOPS_W[archs], data.TOPS[archs], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both', linestyle = 'dotted')
+    ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
-    ax.set_title('Throughput vs. Power for SRAM, eNVM, eDRAM, and Digital', fontsize = 15)
+    ax.set_title('Throughput vs. Power for SRAM, eNVM, eDRAM, and Digital', fontsize = 15, fontweight = 'bold')
+    ax.set_xlabel('1b-TOPS/mm$^2$', fontsize = 15)
     ax.set_xlabel('Power (W)', fontsize = 15)
     ax.set_ylabel('1b-TOPS', fontsize = 15)
 
