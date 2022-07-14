@@ -33,6 +33,8 @@ ARCH_LABEL_LIST = ['SRAM-IMC', 'eNVM-IMC', 'eDRAM-IMC', 'Digital']
 # Pyplot Variables
 plt.rcParams['axes.axisbelow'] = True
 plt.rcParams['legend.loc'] = 'lower right'
+plt.rcParams['font.family'] = 'calibri'
+
 
 # Pyplot Red Box 
 red_box_style = markers.MarkerStyle([(-1,-1), (-1,1), (1,1), (1,-1)], 'none')
@@ -114,7 +116,7 @@ def plot_1(data):
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('Energy-efficiency vs. Compute Density', fontsize = 15)
@@ -143,7 +145,7 @@ def plot_2(data):
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('Energy Efficiency vs. Throughput', fontsize = 15)
@@ -171,7 +173,7 @@ def plot_3(data):
                 ax.plot(data.B_pre_ADC[SRAM_tech], data.TOPS_W[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
     ax.set_yscale('log')
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('Energy-efficiency vs. Pre-ADC Information Content', fontsize = 15)
@@ -198,7 +200,7 @@ def plot_4(data):
             if len(SRAM_tech):
                 ax.plot(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
     
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('ADC Precision vs. Pre-ADC Information Content', fontsize = 15)
@@ -227,7 +229,7 @@ def plot_5(data):
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('Energy-efficiency vs. Throughput for SRAM, eNVM, eDRAM, Digital', fontsize = 15)
@@ -255,7 +257,7 @@ def plot_6(data):
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('Energy-efficiency vs. Compute Density for SRAM, eNVM, eDRAM, Digital', fontsize = 15)
@@ -283,7 +285,7 @@ def plot_7(data):
     
     ax.set_xscale('log')
     ax.set_yscale('log')
-    ax.grid(which = 'both')
+    ax.grid(which = 'both', linestyle = 'dotted')
     
     ax.legend(fontsize = 12)
     ax.set_title('Throughput vs. Power for SRAM, eNVM, eDRAM, and Digital', fontsize = 15)
