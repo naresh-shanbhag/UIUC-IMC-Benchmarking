@@ -4,6 +4,7 @@
 # Based on Matlab Code by Saion Roy
 #################################################################################
 
+import os
 import csv 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -16,17 +17,30 @@ from matplotlib import markers
 CSV_FILE = 'Benchmarking_Data.csv'
 
 # Set Output Directory
-OUTPUT_DIR = 'figures_test'
+OUTPUT_DIR = 'figures'
 
 # Set Output Formats
 SAVE_PDF = True
-SAVE_SVG = False
+SAVE_SVG = True
 
 # Plot Rectangle for IMC Processors 
 MARK_IMC_PROCESSOR = [1, 1, 1, 0, 1, 1, 1]
 
 ##################################################################
 ##################################################################
+
+# Create Output Directory
+if not os.path.exists(OUTPUT_DIR):
+    os.mkdir(OUTPUT_DIR)
+
+if SAVE_PDF:
+    if not os.path.exists(OUTPUT_DIR + '/pdf'):
+        os.mkdir(OUTPUT_DIR + '/pdf')
+
+if SAVE_SVG:
+    if not os.path.exists(OUTPUT_DIR + '/svg'):
+        os.mkdir(OUTPUT_DIR + '/svg')
+
 
 # List of Technology and Architectures to Loop
 TECH_LIST = [5,7,12,16,22,28,45,55,65,180]
@@ -215,6 +229,7 @@ def plot_4(data):
             SRAM_tech = np.array( [i for i in range(len(data.Arch)) if  data.Arch[i] == 'SRAM' and data.Tech[i] == tech and data.IMC_Proc[i] == 1])
             if len(SRAM_tech):
                 ax.plot(data.B_pre_ADC[SRAM_tech], data.B_ADC[SRAM_tech], 'ks',markerfacecolor='none', ms=18, markeredgecolor='red', markeredgewidth = 1.5 )
+    ax.plot(np.arange(12), np.arange(12), 'k--', label = '$B_{ADC} = B_{I(col)}$')
     
     ax.grid(which = 'both', alpha = GRID_ALPHA, linestyle = 'dotted')
     
