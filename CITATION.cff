@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+@inproceedings{shanbhag2022comprehending,
+  title={Comprehending In-memory Computing Trends via Proper Benchmarking},
+  author={Shanbhag, Naresh R and Roy, Saion K},
+  booktitle={2022 IEEE Custom Integrated Circuits Conference (CICC)},
+  pages={01--07},
+  year={2022},
+  organization={IEEE}
+}
