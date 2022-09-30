@@ -1,6 +1,7 @@
 #################################################################################
-# Han-Mo Ou 070722
-# Python Plots
+# Han-Mo Ou 070722 modified 093022 
+# Python Plots for IMC Benchmarking
+# Based on Matlab Code by Saion Roy
 #################################################################################
 
 import csv 
