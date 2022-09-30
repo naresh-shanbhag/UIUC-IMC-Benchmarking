@@ -8,7 +8,7 @@ import csv
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import markers
-
+from matplotlib import font_manager
 
 ##################################################################
 ######################## User Settings ###########################
@@ -21,7 +21,7 @@ OUTPUT_DIR = 'figures_test'
 
 # Set Output Formats
 SAVE_PDF = True
-SAVE_SVG = True
+SAVE_SVG = False
 
 # Plot Rectangle for IMC Processors 
 MARK_IMC_PROCESSOR = [1, 1, 1, 0, 1, 1, 1]
@@ -133,9 +133,9 @@ def plot_1(data):
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
     if SAVE_SVG:
-        fig.savefig(OUTPUT_DIR + '/svg/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.svg')
+        fig.savefig(OUTPUT_DIR + '/svg/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.svg', bbox_inches = 'tight')
     if SAVE_PDF:
-        fig.savefig(OUTPUT_DIR + '/pdf/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.pdf')
+        fig.savefig(OUTPUT_DIR + '/pdf/1_1b-TOPSpW_vs_1bTOPSpmm2_SRAM.pdf', bbox_inches = 'tight')
 
 
 # SRAM: TOPS/W vs. TOPS
@@ -289,9 +289,9 @@ def plot_6(data):
     ax.set_ylabel('1b-TOPS/W', fontsize = 15)
 
     if SAVE_SVG:
-        fig.savefig(OUTPUT_DIR + '/svg/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.svg')
+        fig.savefig(OUTPUT_DIR + '/svg/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.svg', bbox_inches = 'tight')
     if SAVE_PDF:
-        fig.savefig(OUTPUT_DIR + '/pdf/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.pdf')
+        fig.savefig(OUTPUT_DIR + '/pdf/6_1b-TOPSpmm2_vs_1b-TOPSpW_all.pdf', bbox_inches = 'tight')
 
 # Grouping by Architecture: SRAM/eNVM/Dig: TOPS vs. W
 def plot_7(data):
