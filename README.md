@@ -13,8 +13,10 @@ python3 plot_all.py
 ```
 to plot all seven figures.
 
+The `SAVE_PDF` and `SAVE_SVG` toggles determine which formats the plots are saved as. The `MARK_IMC_PROCESSOR` list controls whether each plot has IMC processors labeled with red boxes.   
+
 ## Environment
-The following packages are required to run the program
+The following Python 3 packages are required to run the program
 * numpy
 * matplotlib
 
