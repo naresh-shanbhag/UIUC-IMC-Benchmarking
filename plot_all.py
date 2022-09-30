@@ -8,7 +8,6 @@ import csv
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import markers
-from matplotlib import font_manager
 
 ##################################################################
 ######################## User Settings ###########################
@@ -40,7 +39,7 @@ plt.rcParams['axes.axisbelow'] = True
 plt.rcParams['legend.loc'] = 'lower right'
 plt.rcParams['font.family'] = 'calibri'
 
-FIG_SIZE = (7.5, 5.5)
+FIG_SIZE = (9.8, 7.8)
 COLORS = {'r': 'r', 'g': 'lawngreen', 'b':'b', 'c': 'cyan', 'k': 'k'}
 GRID_ALPHA = 0.4
 
