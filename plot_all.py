@@ -4,7 +4,6 @@
 # Based on Matlab Code by Saion Roy & Naresh Shanbhag
 # University of Illinois at Urbana-Champaign
 #################################################################################
-
 import os
 import csv 
 import numpy as np
