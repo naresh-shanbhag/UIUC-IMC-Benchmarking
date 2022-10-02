@@ -9,7 +9,7 @@ In-memory computing (IMC) architectures have emerged as a compelling platform to
 Our benchmarking effort indicates: 1) SRAM-based IMCs show a clear win in terms of energy efficiency and compute density over digital accelerators at the bank-level but the energy efficiency gap reduces dramatically when comparing at the processor level; 2) eNVM-based IMCs lag behind SRAM-based IMCs in terms of both energy efficiency and compute density, and surprisingly lag digital accelerators in terms of compute density; 3) the compute (bank-level) accuracy of IMCs, though a critical metric, is pervasively neglected in publications as is the energy vs. accuracy trade-off inherent to IMCs.
 
 ## Usage
-Set the `OUTPUT_DIR` parameter on line 19 of `plot_all.py` to the output folder, and run
+Set the `OUTPUT_DIR` parameter on line 20 of `plot_all.py` to the output folder, and run
 ``` 
 python3 plot_all.py
 ```
