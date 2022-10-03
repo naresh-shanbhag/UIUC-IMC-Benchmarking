@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Shanbhag
+    given-names: Naresh
+  - family-names: Roy
+    given-names: Saion
+title: "IMC-Benchmarking"
+date-released: 10-03-2022
