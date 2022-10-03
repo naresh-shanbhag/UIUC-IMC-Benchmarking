@@ -24,6 +24,7 @@ The following Python 3 packages are required to run the program
 
 ## Citation
 Please cite our paper and this GitHub repository if you use our benchmarking data.
+Paper BibTex:
 ```
 @inproceedings{shanbhag2022comprehending,
   title={Comprehending In-memory Computing Trends via Proper Benchmarking},
@@ -32,5 +33,14 @@ Please cite our paper and this GitHub repository if you use our benchmarking dat
   pages={01--07},
   year={2022},
   organization={IEEE}
+}
+```
+Repository BibTex:
+```
+@software{Shanbhag_IMC-Benchmarking_GitHub_respository_2022,
+author = {Shanbhag, Naresh R and Roy, Saion K},
+month = {3},
+title = {{IMC-Benchmarking GitHub respository}},
+year = {2022}
 }
 ```
