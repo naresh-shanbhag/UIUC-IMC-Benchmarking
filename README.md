@@ -1,5 +1,7 @@
-# Benchmarking In-memory Computing (IMC) Architectures
+# Benchmarking In-memory Computing (IMC) Architectures (This repo has been migrated [here](https://github.com/UIUC-IMC/UIUC-IMC-Benchmarking))
 by Naresh R. Shanbhag and Saion K. Roy, 2022
+
+
 
 This is the repository for the database (Benchmarking_Data.csv) and Python code (plot_all.py) to generate annually updated versions of the plots found in our CICC'22 paper [Benchmarking In-memory Computing (IMC) Architectures](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9772817) which describes the benchmarking methodology. Please check for annual updates to the database which will occur sometime in August. Users are welcome to generate their own plots using our database. If you do so, please cite our paper and this GitHub repository. A BibTex code is provided below for those using LaTex.
 
